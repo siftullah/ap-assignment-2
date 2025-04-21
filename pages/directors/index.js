@@ -1,6 +1,6 @@
 import useSWR from 'swr';
-import MovieCard from '../components/MovieCard';
-import styles from '../styles/Directors.module.css';
+import styles from '../../styles/Directors.module.css';
+import Link from 'next/link';
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
@@ -16,19 +16,15 @@ export default function Directors() {
       
       <div className={styles.directorList}>
         {directors.map((director) => (
-          <div key={director.id} className={styles.directorCard}>
-            <h2 className={styles.directorName}>{director.name}</h2>
-            <p className={styles.biography}>{director.biography}</p>
-            
-            <h3 className={styles.moviesTitle}>Movies Directed</h3>
-            <div className={styles.movieGrid}>
-              {director.movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
+          <Link key={director.id} href={`/directors/${director.id}`} className={styles.directorLink}>
+            <div className={styles.directorCard}>
+              <h2 className={styles.directorName}>{director.name}</h2>
+              <p className={styles.biography}>{director.biography}</p>
+              <p className={styles.movieCount}>Total Movies: {director.movies_count}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
   );
-} 
+}

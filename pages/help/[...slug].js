@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 import styles from '../../styles/Help.module.css';
 
-export default function HelpPage() {
+export default function HelpPage() 
+{
   const router = useRouter();
   const { slug } = router.query;
   const path = '/help' + (Array.isArray(slug) ? '/' + slug.join('/') : '');

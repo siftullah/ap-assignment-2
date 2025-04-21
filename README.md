@@ -27,16 +27,21 @@ A movie directory application built with Next.js demonstrating various rendering
   - Rating
 - Uses `getStaticPaths` and `getStaticProps`
 - Implements fallback pages for on-demand generation
+- used ISR since we are using ISR for /movies, therefore there is the assumption that movies details can be updated, thus ISR also seems valid for movie details page
 
-### Director Page (`/movies/[id]/director`) 
-- Detailed director information
+### Movie Director Page (`/movies/[id]/director`) 
+- Detailed director information of a specific movie
+- SSG since /movies and /movies/[id] are also SSG and this will also load up the page since there is minimal user interactivity on this page
+- ISR because details of movies can be updated which can include director (incase wrong director was selected in the data first time)
 
-### Help Section (`/help/[[...slug]]`)
+### Help Section (`/help/[...slug]`)
 Catch-all routes for help pages:
-- `/help`
 - `/help/faqs`  
 - `/help/contact`
 - `/help/privacy`
+
+### Help Section Index route (`/help/index.js`)
+Since /help/[...slug] can't catch /help, therefore created this file to catch /help
 
 ### Custom 404 Page
 - User-friendly error message
@@ -51,10 +56,20 @@ Catch-all routes for help pages:
 - Server-side rendered filtered movie list
 - Shows all movies in selected genre
 
-### Directors Page (`/directors`)
+### Directors Page (`/directors/index.js`)
 - Client-side rendered using `useSWR`
-- Dynamic fetching of director data
-- Displays:
+- for SWR, needed an api , so created api route `/api/directors`
+- Displays Card for each director
+- Each card links to details page of director
+- Each card Displays:
   - Director name
   - Biography
-  - Movies directed
+  - Count of Movies directed
+
+### Director Details Page (`/directors/[id].js`)
+- Client-side rendered using `useSWR`
+- for SWR, needed an api , so used api route `/api/directors`
+- Displays:
+  - Name
+  - Biography
+  - Movies Cards
